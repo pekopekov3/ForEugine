@@ -1,0 +1,9 @@
+Some explanations:
+
+1. The folder SoapEaxampleService, contains eclipse project SAOPExample, which is a web service running on Apache Tomcat 8.0
+The WSDL file can be viewed through browser at http://localhost:8080/SOAPExample/services/PersonServiceImpl?wsdl also it is
+Located WebContent\wsdl folder.
+2. The folder CustomConnector contains the Mule devKit project T24Outbound (don't let this name fool you, it is just a test to the exposed service above)
+this connector can exchange data with the PersonServiceImpl service. It is pretty straight-forward simple CXF connector. 
+3. The folder SimpleMuleFlow is an AnyPoint Studio Project That uses the above connector as outbound connector at the end of the flow.
+It takes file with simple JSON data as an input, converts it to Object and sends the object through the connector to the PersonSrviceImpl.
