@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.mule.modules</groupId>
+    <artifactId>t24outbound-connector</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>mule-module</packaging>
+    <name>Mule T24outbound Anypoint Connector</name>
+
+    <parent>
+        <groupId>org.mule.tools.devkit</groupId>
+        <artifactId>mule-devkit-parent</artifactId>
+        <version>3.9.0</version>
+    </parent>
+
+    <properties>
+        <category>Community</category>
+        <licensePath>LICENSE.md</licensePath>
+        <devkit.studio.package.skip>false</devkit.studio.package.skip>
+        <!-- Adding CXF Support -->
+        
+        <!-- Maven should build the update site Zip file -->
+		<devkit.studio.package.skip>false</devkit.studio.package.skip>
+		 
+		<!--  CXF version info -->       
+		<cxf.version>2.5.9</cxf.version>
+		<cxf.version.boolean>2.6.0</cxf.version.boolean>
+		 
+		<!-- Package name, WSDL file path and location in the JAR -->
+		<connector.package>
+		    org.mule.modules.t24outbound.definition
+		</connector.package>
+		<connector.wsdl>
+		    ${basedir}/src/main/resources/wsdl/PersonServiceImpl.wsdl
+		</connector.wsdl>
+		<connector.wsdlLocation>
+		    classpath:wsdl/PersonServiceImpl.wsdl
+		</connector.wsdlLocation>
+        
+    </properties>
+    
+    <dependencies>
+	    <dependency>
+		    <groupId>org.mule.modules</groupId>
+		    <artifactId>mule-module-cxf</artifactId>
+		    <version>${mule.version}</version>
+		    <scope>provided</scope>
+	  	</dependency>
+    </dependencies>
+    
+    <build>
+	    <plugins>
+			<plugin>
+			    <groupId>org.apache.cxf</groupId>
+			    <artifactId>cxf-codegen-plugin</artifactId>
+			    <version>${cxf.version}</version>
+			    <executions>
+			        <execution>
+			            <!-- Note that validate phase is not the usual phase to
+			              run WSDL2Java. This is done because DevKit requires the
+			              class be generated so it can be used in generate-sources
+			              phase by DevKit. The DevKit generates code from annotations
+			              etc. and references the WSDL2Java generated output.  -->
+			            <phase>validate</phase>
+			            <goals>
+			                <goal>wsdl2java</goal>
+			            </goals>
+			            <configuration>
+			                <wsdlOptions>
+			                    <wsdlOption>
+			                        <!-- WSDL File Path -->
+			                        <wsdl>${connector.wsdl}</wsdl>
+			                        <!-- pick up the WSDL from within the JAR -->
+			                        <wsdlLocation>${connector.wsdlLocation}</wsdlLocation>
+			                        <autoNameResolution>true</autoNameResolution>
+			                        <extraargs>
+			                            <!-- Package Destination -->
+			                            <extraarg>-p</extraarg>
+			                            <!-- Name of the output package specified
+			                              that follows the -p argument to wsdl2java. -->
+			                            <extraarg>
+			                                ${connector.package}
+			                            </extraarg>
+			                                <!-- DataMapper compatibility requires that
+			                                boolean getters and setters follow naming
+			                                conventions for other getters and setters. -->
+			                            <extraarg>-xjc-Xbg</extraarg>
+			                            <extraarg>-xjc-Xcollection-setter-injector</extraarg>
+			                        </extraargs>
+			                    </wsdlOption>
+			                </wsdlOptions>
+			            </configuration>
+			        </execution>
+			    </executions>
+			    <dependencies>
+			        <!-- Boolean Getters -->
+			        <dependency>
+			            <groupId>org.apache.cxf.xjcplugins</groupId>
+			            <artifactId>cxf-xjc-boolean</artifactId>
+			            <version>${cxf.version.boolean}</version>
+			        </dependency>
+			        <!-- Collection Setters -->
+			        <dependency>
+			            <groupId>net.java.dev.vcc.thirdparty</groupId>
+			            <artifactId>collection-setter-injector</artifactId>
+			            <version>0.5.0-1</version>
+			        </dependency>
+			    </dependencies>
+			</plugin>
+	    </plugins>
+    </build>
+    
+    <repositories>
+        <repository>
+            <id>mulesoft-releases</id>
+            <name>MuleSoft Releases Repository</name>
+            <url>http://repository.mulesoft.org/releases/</url>
+            <layout>default</layout>
+        </repository>
+        <repository>
+            <id>mulesoft-snapshots</id>
+            <name>MuleSoft Snapshots Repository</name>
+            <url>http://repository.mulesoft.org/snapshots/</url>
+            <layout>default</layout>
+        </repository>
+    </repositories>
+</project>

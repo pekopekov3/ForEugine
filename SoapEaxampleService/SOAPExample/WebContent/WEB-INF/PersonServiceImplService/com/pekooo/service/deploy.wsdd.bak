@@ -1,0 +1,45 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from PersonServiceImplService WSDL service -->
+
+  <service name="PersonServiceImpl" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://service.pekooo.com"/>
+      <parameter name="wsdlServiceElement" value="PersonServiceImplService"/>
+      <parameter name="schemaQualified" value="http://beans.pekooo.com,http://service.pekooo.com"/>
+      <parameter name="wsdlServicePort" value="PersonServiceImpl"/>
+      <parameter name="className" value="com.pekooo.service.PersonServiceImplSoapBindingImpl"/>
+      <parameter name="wsdlPortType" value="PersonServiceImpl"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="addPerson" qname="operNS:addPerson" xmlns:operNS="http://service.pekooo.com" returnQName="retNS:addPersonReturn" xmlns:retNS="http://service.pekooo.com" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:p" xmlns:pns="http://service.pekooo.com" type="tns:Person" xmlns:tns="http://beans.pekooo.com"/>
+      </operation>
+      <operation name="deletePerson" qname="operNS:deletePerson" xmlns:operNS="http://service.pekooo.com" returnQName="retNS:deletePersonReturn" xmlns:retNS="http://service.pekooo.com" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:id" xmlns:pns="http://service.pekooo.com" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getAllPersons" qname="operNS:getAllPersons" xmlns:operNS="http://service.pekooo.com" returnQName="retNS:getAllPersonsReturn" xmlns:retNS="http://service.pekooo.com" returnType="rtns:Person" xmlns:rtns="http://beans.pekooo.com" soapAction="" >
+      </operation>
+      <operation name="getPerson" qname="operNS:getPerson" xmlns:operNS="http://service.pekooo.com" returnQName="retNS:getPersonReturn" xmlns:retNS="http://service.pekooo.com" returnType="rtns:Person" xmlns:rtns="http://beans.pekooo.com" soapAction="" >
+        <parameter qname="pns:id" xmlns:pns="http://service.pekooo.com" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <parameter name="allowedMethods" value="deletePerson getPerson getAllPersons addPerson"/>
+
+      <typeMapping
+        xmlns:ns="http://beans.pekooo.com"
+        qname="ns:Person"
+        type="java:com.pekooo.beans.Person"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+  </service>
+</deployment>

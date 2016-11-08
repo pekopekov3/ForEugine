@@ -1,0 +1,16 @@
+{
+    "inputMessageMetadata": {
+        "messagePayload": {
+            "connectorName": "#_custom_mule_metadata_type_#",
+            "typeId": "person"
+        }
+    },
+    "outputMessageMetadata": {
+        "messagePayload": {
+            "connectorName": "SimpleSoap__Configuration",
+            "typeId": "addPerson"
+        }
+    },
+    "id": "4910c64b-57d8-4f28-8f72-4366a5bc19b3",
+    "version": "5.2.0.0"
+}

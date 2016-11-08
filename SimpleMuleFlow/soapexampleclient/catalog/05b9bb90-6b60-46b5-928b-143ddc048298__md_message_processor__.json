@@ -1,0 +1,11 @@
+{
+    "inputMessageMetadata": {
+        "messagePayload": {
+            "connectorName": "SimpleSoap__Configuration",
+            "typeId": "addPerson Result"
+        }
+    },
+    "outputMessageMetadata": {},
+    "id": "05b9bb90-6b60-46b5-928b-143ddc048298",
+    "version": "5.2.0.0"
+}

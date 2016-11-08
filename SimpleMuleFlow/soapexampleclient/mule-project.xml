@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mule-project xmlns="http://www.mulesoft.com/tooling/project" runtimeId="org.mule.tooling.server.3.8.2.ee" schemaVersion="5.3.0.0">
+    <name>soapexampleclient</name>
+    <description></description>
+    <muleExtension name="APIkit SOAP" qualifier="org.mule.tooling.soapkit.contribution"/>
+    <muleExtension name="CookBook" qualifier="org.mule.tooling.ui.contribution.cook-book.3.5.0"/>
+    <muleExtension name="T24outbound" qualifier="org.mule.tooling.ui.contribution.t24outbound.3.5.0"/>
+    <muleExtension name="SimpleSoap" qualifier="org.mule.tooling.ui.contribution.simple-soap.3.7.0"/>
+</mule-project>

@@ -1,0 +1,3 @@
+<!-- BEGIN_INCLUDE(t24outbound:greet) -->
+    <t24outbound:greet config-ref="" friend="#[map-payload:friend]" />
+<!-- END_INCLUDE(t24outbound:greet) -->

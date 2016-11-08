@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:json="http://www.mulesoft.org/schema/mule/json"
+	xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:mulexml="http://www.mulesoft.org/schema/mule/xml"
+	xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:simple-soap="http://www.mulesoft.org/schema/mule/simple-soap" xmlns:t24outbound="http://www.mulesoft.org/schema/mule/t24outbound" xmlns:cook-book="http://www.mulesoft.org/schema/mule/cook-book" xmlns:ws="http://www.mulesoft.org/schema/mule/ws" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
+http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/current/mule-xml.xsd
+http://www.mulesoft.org/schema/mule/ws http://www.mulesoft.org/schema/mule/ws/current/mule-ws.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/t24outbound http://www.mulesoft.org/schema/mule/t24outbound/current/mule-t24outbound.xsd
+http://www.mulesoft.org/schema/mule/simple-soap http://www.mulesoft.org/schema/mule/simple-soap/current/mule-simple-soap.xsd
+http://www.mulesoft.org/schema/mule/cook-book http://www.mulesoft.org/schema/mule/cook-book/current/mule-cook-book.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd">
+    <t24outbound:config name="T24outbound__Configuration" doc:name="T24outbound: Configuration" password="admin" username="admin"/>
+    
+    
+    <flow name="simpleflow">
+        <file:inbound-endpoint path="D:\TestIn" responseTimeout="10000" doc:name="File" />
+        <json:json-to-object-transformer name="jsonToPerson" returnClass="org.mule.modules.t24outbound.definition.Person" doc:name="jsonToPerson"/>
+        <t24outbound:add-person config-ref="T24outbound__Configuration" doc:name="T24outbound">
+            <t24outbound:p ref="#[message.payload]"/>
+        </t24outbound:add-person>
+        <logger message="#[message.payload]" level="INFO" doc:name="Logger"/>		
+    </flow>
+
+</mule>
